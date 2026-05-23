@@ -1,1 +1,1 @@
-##Actividad_01 de Aplicaciones Moviles
+Actividad_01 de Aplicaciones Moviles
