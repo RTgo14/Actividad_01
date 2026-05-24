@@ -8,8 +8,10 @@ let incidencias =
 const listaDOM = document.getElementById("lista-incidencias");
 const inputBuscar = document.getElementById("buscar");
 const selectFiltro = document.getElementById("filtro-prioridad");
+const form = document.getElementById('form-incidencia');
+const msgError = document.getElementById('mensaje-error');
 
-// Renderizado Dinámico
+// Renderizado Dinamico
 const renderizarIncidencias = (datos) => {
     listaDOM.innerHTML = "";
 
@@ -19,10 +21,10 @@ const renderizarIncidencias = (datos) => {
         return;
     }
 
-    // MÉTODO sort
+    // METODO sort
     const datosOrdenados = [...datos].sort((a, b) => b.id - a.id);
 
-    // MÉTODO map
+    // METODO map
     const htmlString = datosOrdenados
         .map(
             (incidencia) => `
@@ -39,12 +41,12 @@ const renderizarIncidencias = (datos) => {
 
     listaDOM.innerHTML = htmlString;
 };
-// Búsqueda y Filtros
+// Busqueda y Filtros
 const aplicarFiltros = () => {
     const textoBusqueda = inputBuscar.value.toLowerCase();
     const prioridadFiltro = selectFiltro.value;
 
-    // MÉTODO filter
+    // METODO filter
     const resultados = incidencias.filter((inc) => {
         const coincideTexto = inc.titulo.toLowerCase().includes(textoBusqueda);
         const coincidePrioridad =
@@ -55,9 +57,51 @@ const aplicarFiltros = () => {
     renderizarIncidencias(resultados);
 };
 
+// Creacion y Validacion
+const mostrarError = (mensaje) => {
+    msgError.textContent = mensaje;
+    msgError.classList.remove('hidden');
+};
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const titulo = document.getElementById('titulo').value.trim();
+    const descripcion = document.getElementById('descripcion').value.trim();
+    const prioridad = document.getElementById('prioridad').value;
+
+    // Validacion
+    if (!titulo || !descripcion || !prioridad) {
+        mostrarError("Todos los campos son obligatorios.");
+        return;
+    }
+    
+    if (titulo.length < 5) {
+        mostrarError("El título debe tener al menos 5 caracteres.");
+        return;
+    }
+
+    msgError.classList.add('hidden');
+
+    const nuevaIncidencia = {
+        id: Date.now(), 
+        titulo,
+        descripcion,
+        prioridad,
+        estado: "Abierto",
+        fecha: new Date().toISOString().split('T')[0]
+    };
+
+    incidencias.push(nuevaIncidencia);
+    localStorage.setItem('incidenciasIT', JSON.stringify(incidencias));
+    
+    form.reset();
+    aplicarFiltros(); 
+});
+
 // Listeners de filtros
 inputBuscar.addEventListener("input", aplicarFiltros);
 selectFiltro.addEventListener("change", aplicarFiltros);
 
-// Inicializar la vista
+// Inicializacion de vista
 renderizarIncidencias(incidencias);
