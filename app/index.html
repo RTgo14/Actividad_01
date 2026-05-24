@@ -41,7 +41,19 @@
 
         <!-- Panel Derecho: Formulario -->
         <section class="list-section">
+            <div class="filters">
+                <input type="text" id="buscar" placeholder="Buscar por título...">
+                <select id="filtro-prioridad">
+                    <option value="Todas">Todas las prioridades</option>
+                    <option value="Alta">Alta</option>
+                    <option value="Media">Media</option>
+                    <option value="Baja">Baja</option>
+                </select>
+            </div>
             
+            <div id="lista-incidencias" class="incidencias-grid">
+                <!-- Se renderiza dinámicamente con JS -->
+            </div>
         </section>
     </main>
 </body>
