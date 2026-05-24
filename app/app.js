@@ -10,6 +10,8 @@ const inputBuscar = document.getElementById("buscar");
 const selectFiltro = document.getElementById("filtro-prioridad");
 const form = document.getElementById('form-incidencia');
 const msgError = document.getElementById('mensaje-error');
+const modal = document.getElementById('modal-detalle');
+const btnCerrarModal = document.getElementById('close-modal');
 
 // Renderizado Dinamico
 const renderizarIncidencias = (datos) => {
@@ -40,7 +42,9 @@ const renderizarIncidencias = (datos) => {
         .join("");
 
     listaDOM.innerHTML = htmlString;
+    asignarEventosDetalle();
 };
+
 // Busqueda y Filtros
 const aplicarFiltros = () => {
     const textoBusqueda = inputBuscar.value.toLowerCase();
@@ -97,6 +101,37 @@ form.addEventListener('submit', (e) => {
     
     form.reset();
     aplicarFiltros(); 
+});
+
+// Detalle del elemento Modal
+const asignarEventosDetalle = () => {
+    const botones = document.querySelectorAll('.btn-detalle');
+    botones.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const idBuscado = Number(e.target.dataset.id);
+            
+            // METODO find
+            const incidencia = incidencias.find(inc => inc.id === idBuscado);
+            
+            if(incidencia) abrirModal(incidencia);
+        });
+    });
+};
+
+const abrirModal = (incidencia) => {
+    document.getElementById('modal-titulo').textContent = incidencia.titulo;
+    document.getElementById('modal-estado').textContent = incidencia.estado;
+    document.getElementById('modal-prioridad').textContent = incidencia.prioridad;
+    document.getElementById('modal-fecha').textContent = incidencia.fecha;
+    document.getElementById('modal-descripcion').textContent = incidencia.descripcion;
+    modal.classList.remove('hidden');
+};
+
+btnCerrarModal.addEventListener('click', () => modal.classList.add('hidden'));
+
+// Cerrar modal haciendo click afuera de el
+window.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.add('hidden');
 });
 
 // Listeners de filtros
