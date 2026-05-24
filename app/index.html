@@ -57,45 +57,19 @@
         </section>
     </main>
 
-    <!-- MODAL  -->
-    <div id="modal-incidencia" class="modal hidden">
+    <!-- Modal de Detalle -->
+    <div id="modal-detalle" class="modal hidden">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modal-titulo">Detalles de la Incidencia</h3>
-                <span class="close-btn" id="cerrar-modal">&times;</span>
-            </div>
-            
+            <span id="close-modal" class="close-btn">&times;</span>
+            <h2 id="modal-titulo">Título</h2>
             <div class="modal-body">
-                <div class="detalle-grupo">
-                    <strong>Título:</strong> 
-                    <p id="detalle-titulo">Fallo en servidor principal</p>
-                </div>
-                <div class="detalle-grupo">
-                    <strong>Descripción:</strong> 
-                    <p id="detalle-descripcion">El servidor no responde a los pings desde las 08:00 AM.</p>
-                </div>
-                <div class="detalle-grupo">
-                    <strong>Prioridad:</strong> 
-                    <span id="detalle-prioridad" class="badge">Alta</span>
-                </div>
-                
-                <!-- Opciones de actualizacion -->
-                <div class="form-group mt-2">
-                    <label for="cambiar-estado"><strong>Actualizar Estado:</strong></label>
-                    <select id="cambiar-estado">
-                        <option value="Abierta">Abierta</option>
-                        <option value="En Progreso">En Progreso</option>
-                        <option value="Resuelta">Resuelta</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button class="btn-secondary" id="btn-cancelar-modal">Cerrar</button>
-                <button class="btn-primary" id="btn-guardar-estado">Guardar Cambios</button>
+                <p><strong>Estado:</strong> <span id="modal-estado"></span></p>
+                <p><strong>Prioridad:</strong> <span id="modal-prioridad"></span></p>
+                <p><strong>Fecha de Registro:</strong> <span id="modal-fecha"></span></p>
+                <p><strong>Descripción:</strong></p>
+                <p id="modal-descripcion"></p>
             </div>
         </div>
     </div>
-
 </body>
 </html>
