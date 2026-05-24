@@ -47,3 +47,21 @@ header {
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     height: fit-content;
 }
+.form-group {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+/*Diseño para inputs, textareas y selects*/
+input, textarea, select {
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
