@@ -81,3 +81,16 @@ input, textarea, select {
 .btn-primary:hover {
     background-color: #2980b9;
 }
+/*alertas de error para validaciones*/
+.error-msg {
+    color: var(--high-color);
+    background-color: #fadbd8;
+    padding: 0.8rem;
+    border-radius: 4px;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+/*clase para ocultar elementos*/
+.hidden {
+    display: none !important;
+}
