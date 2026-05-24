@@ -53,8 +53,49 @@
             
             <div id="lista-incidencias" class="incidencias-grid">
                 <!-- Se renderiza dinámicamente con JS -->
-            </div>
+           </div>
         </section>
     </main>
+
+    <!-- MODAL  -->
+    <div id="modal-incidencia" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-titulo">Detalles de la Incidencia</h3>
+                <span class="close-btn" id="cerrar-modal">&times;</span>
+            </div>
+            
+            <div class="modal-body">
+                <div class="detalle-grupo">
+                    <strong>Título:</strong> 
+                    <p id="detalle-titulo">Fallo en servidor principal</p>
+                </div>
+                <div class="detalle-grupo">
+                    <strong>Descripción:</strong> 
+                    <p id="detalle-descripcion">El servidor no responde a los pings desde las 08:00 AM.</p>
+                </div>
+                <div class="detalle-grupo">
+                    <strong>Prioridad:</strong> 
+                    <span id="detalle-prioridad" class="badge">Alta</span>
+                </div>
+                
+                <!-- Opciones de actualizacion -->
+                <div class="form-group mt-2">
+                    <label for="cambiar-estado"><strong>Actualizar Estado:</strong></label>
+                    <select id="cambiar-estado">
+                        <option value="Abierta">Abierta</option>
+                        <option value="En Progreso">En Progreso</option>
+                        <option value="Resuelta">Resuelta</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn-secondary" id="btn-cancelar-modal">Cerrar</button>
+                <button class="btn-primary" id="btn-guardar-estado">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
