@@ -1,4 +1,3 @@
-// data.js
 export const incidenciasIniciales = [
     { id: 1, titulo: "Fallo de conexión WiFi", descripcion: "El router del piso 3 no asigna IPs.", prioridad: "Alta", estado: "Abierto", fecha: "2026-05-20" },
     { id: 2, titulo: "Monitor sin imagen", descripcion: "El monitor de la sala B no enciende.", prioridad: "Media", estado: "Abierto", fecha: "2026-05-21" },
