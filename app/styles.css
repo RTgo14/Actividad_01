@@ -19,3 +19,22 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
 }
+/*cabecera*/
+header {
+    background-color: var(--primary);
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+/*responsive*/
+@media (max-width: 768px) {
+    .container { flex-direction: column; }
+}
