@@ -1,0 +1,10 @@
+/*colores principales*/
+:root {
+    --bg-color: #f4f7f6;
+    --primary: #2c3e50;
+    --secondary: #3498db;
+    --text-color: #333;
+    --high-color: #e74c3c;
+    --med-color: #f39c12;
+    --low-color: #27ae60;
+}
