@@ -14,11 +14,34 @@
     <main class="container">
         <!-- Panel Izquierdo: Formulario -->
         <section class="form-section">
-
+            <h2>Registrar Incidencia</h2>
+            <form id="form-incidencia">
+                <div class="form-group">
+                    <label for="titulo">Título de la incidencia:</label>
+                    <input type="text" id="titulo" placeholder="Ej. Fallo en servidor">
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción detallada:</label>
+                    <textarea id="descripcion" rows="4" placeholder="Describe el problema..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="prioridad">Prioridad:</label>
+                    <select id="prioridad">
+                        <option value="">Seleccione...</option>
+                        <option value="Alta">Alta</option>
+                        <option value="Media">Media</option>
+                        <option value="Baja">Baja</option>
+                    </select>
+                </div>
+                <!-- Mensajes de validación -->
+                <div id="mensaje-error" class="error-msg hidden"></div>
+                <button type="submit" class="btn-primary">Guardar Incidencia</button>
+            </form>
         </section>
+
         <!-- Panel Derecho: Formulario -->
         <section class="list-section">
-
+            
         </section>
     </main>
 </body>
