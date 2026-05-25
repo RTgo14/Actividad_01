@@ -94,3 +94,17 @@ input, textarea, select {
 .hidden {
     display: none !important;
 }
+/* panel derecho para la lista completa */
+.list-section {
+    flex: 2;
+}
+
+/* alinear barra de busqueda y filtro */
+.filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.filters input { flex: 2; }
+.filters select { flex: 1; }
