@@ -115,3 +115,15 @@ input, textarea, select {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1rem;
 }
+
+/* diseño principal de cada incidencia */
+.card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-top: 4px solid #ccc;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
