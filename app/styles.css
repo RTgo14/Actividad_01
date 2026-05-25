@@ -173,3 +173,28 @@ input, textarea, select {
     justify-content: center;
     align-items: center;
 }
+
+/* caja blanca del modal y contenido */
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+/* boton de cerrar con la X */
+.close-btn {
+    position: absolute;
+    top: 1rem; right: 1.5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.modal-body {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
