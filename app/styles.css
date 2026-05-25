@@ -127,3 +127,8 @@ input, textarea, select {
     flex-direction: column;
     gap: 0.5rem;
 }
+
+/* bordes de colores segun el nivel de prioridad */
+.card-alta { border-top-color: var(--high-color); }
+.card-media { border-top-color: var(--med-color); }
+.card-baja { border-top-color: var(--low-color); }
