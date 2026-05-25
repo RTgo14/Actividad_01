@@ -108,3 +108,10 @@ input, textarea, select {
 
 .filters input { flex: 2; }
 .filters select { flex: 1; }
+
+/* cuadricula que se ajusta a la pantalla automaticamente */
+.incidencias-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
