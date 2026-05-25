@@ -132,3 +132,34 @@ input, textarea, select {
 .card-alta { border-top-color: var(--high-color); }
 .card-media { border-top-color: var(--med-color); }
 .card-baja { border-top-color: var(--low-color); }
+
+/* forma de las etiquetas de prioridad */
+.badge {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    color: white;
+    width: fit-content;
+}
+
+.badge-alta { background-color: var(--high-color); }
+.badge-media { background-color: var(--med-color); }
+.badge-baja { background-color: var(--low-color); }
+
+/* boton inferior de la tarjeta */
+.btn-detalle {
+    margin-top: auto;
+    background: transparent;
+    border: 1px solid var(--secondary);
+    color: var(--secondary);
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-detalle:hover {
+    background: var(--secondary);
+    color: white;
+}
