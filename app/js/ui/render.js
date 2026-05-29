@@ -6,7 +6,12 @@ export const renderizarIncidencias = (datos, contenedorLista, contadorDOM) => {
     
     // Mejora UX: Estado vacío
     if (datos.length === 0) {
-        contenedorLista.innerHTML = '<p class="empty-msg" style="grid-column: 1 / -1; text-align: center; color: #7f8c8d;">No hay incidencias para mostrar.</p>';
+        contenedorLista.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; background: white; border-radius: 8px; border: 2px dashed #ccc;">
+                <h3 style="color: #7f8c8d; margin-bottom: 0.5rem;">No hay incidencias para mostrar</h3>
+                <p style="color: #95a5a6;">Intenta registrar una nueva incidencia o limpia los filtros.</p>
+            </div>
+        `;
         return;
     }
 
