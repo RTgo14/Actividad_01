@@ -1,72 +1,30 @@
-import { incidenciasIniciales } from "./data.js";
+import { cargarIncidencias, agregarIncidencia, filtrarIncidencias } from './services/module-service.js';
+import { renderizarIncidencias, mostrarToastExito } from './ui/render.js';
+import { validarLongitud, validarPrioridad } from './utils/validators.js';
 
-// Estado y LocalStorage
-let incidencias =
-    JSON.parse(localStorage.getItem("incidenciasIT")) || incidenciasIniciales;
-
-// Referencias al DOM (Listado)
-const listaDOM = document.getElementById("lista-incidencias");
-const inputBuscar = document.getElementById("buscar");
-const selectFiltro = document.getElementById("filtro-prioridad");
+// Elementos del DOM
 const form = document.getElementById('form-incidencia');
+const inputBuscar = document.getElementById('buscar');
+const selectFiltro = document.getElementById('filtro-prioridad');
+const listaDOM = document.getElementById('lista-incidencias');
+const contadorDOM = document.getElementById('contador-registros');
 const msgError = document.getElementById('mensaje-error');
 const modal = document.getElementById('modal-detalle');
-const btnCerrarModal = document.getElementById('close-modal');
 
-// Renderizado Dinamico
-const renderizarIncidencias = (datos) => {
-    listaDOM.innerHTML = "";
+// Inicialización
+let incidenciasActuales = cargarIncidencias();
+renderizarIncidencias(incidenciasActuales, listaDOM, contadorDOM);
 
-    if (datos.length === 0) {
-        listaDOM.innerHTML =
-            '<p class="empty-msg">No se encontraron incidencias.</p>';
-        return;
-    }
-
-    // METODO sort
-    const datosOrdenados = [...datos].sort((a, b) => b.id - a.id);
-
-    // METODO map
-    const htmlString = datosOrdenados
-        .map(
-            (incidencia) => `
-        <div class="card card-${incidencia.prioridad.toLowerCase()}">
-            <h3>${incidencia.titulo}</h3>
-            <p class="badge badge-${incidencia.prioridad.toLowerCase()}">Prioridad: ${incidencia.prioridad}</p>
-            <p><strong>Estado:</strong> ${incidencia.estado}</p>
-            <p><small>${incidencia.fecha}</small></p>
-            <button class="btn-detalle" data-id="${incidencia.id}">Ver Detalle</button>
-        </div>
-    `,
-        )
-        .join("");
-
-    listaDOM.innerHTML = htmlString;
-    asignarEventosDetalle();
-};
-
-// Busqueda y Filtros
+// Eventos de Filtro
 const aplicarFiltros = () => {
-    const textoBusqueda = inputBuscar.value.toLowerCase();
-    const prioridadFiltro = selectFiltro.value;
-
-    // METODO filter
-    const resultados = incidencias.filter((inc) => {
-        const coincideTexto = inc.titulo.toLowerCase().includes(textoBusqueda);
-        const coincidePrioridad =
-            prioridadFiltro === "Todas" || inc.prioridad === prioridadFiltro;
-        return coincideTexto && coincidePrioridad;
-    });
-
-    renderizarIncidencias(resultados);
+    incidenciasActuales = filtrarIncidencias(inputBuscar.value, selectFiltro.value);
+    renderizarIncidencias(incidenciasActuales, listaDOM, contadorDOM);
 };
 
-// Creacion y Validacion
-const mostrarError = (mensaje) => {
-    msgError.textContent = mensaje;
-    msgError.classList.remove('hidden');
-};
+inputBuscar.addEventListener('input', aplicarFiltros);
+selectFiltro.addEventListener('change', aplicarFiltros);
 
+// Formulario de creación
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     
@@ -74,69 +32,46 @@ form.addEventListener('submit', (e) => {
     const descripcion = document.getElementById('descripcion').value.trim();
     const prioridad = document.getElementById('prioridad').value;
 
-    // Validacion
-    if (!titulo || !descripcion || !prioridad) {
-        mostrarError("Todos los campos son obligatorios.");
+    // Uso de validadores reutilizables
+    if (!validarLongitud(titulo, 5) || !validarLongitud(descripcion, 10)) {
+        msgError.textContent = "El título (min 5) y descripción (min 10) son obligatorios.";
+        msgError.classList.remove('hidden');
         return;
     }
-    
-    if (titulo.length < 5) {
-        mostrarError("El título debe tener al menos 5 caracteres.");
+
+    if (!validarPrioridad(prioridad)) {
+        msgError.textContent = "Seleccione una prioridad válida.";
+        msgError.classList.remove('hidden');
         return;
     }
 
     msgError.classList.add('hidden');
 
-    const nuevaIncidencia = {
-        id: Date.now(), 
-        titulo,
-        descripcion,
-        prioridad,
-        estado: "Abierto",
-        fecha: new Date().toISOString().split('T')[0]
-    };
-
-    incidencias.push(nuevaIncidencia);
-    localStorage.setItem('incidenciasIT', JSON.stringify(incidencias));
+    // Módulo Service se encarga de guardar y retornar la lista actualizada
+    incidenciasActuales = agregarIncidencia({ titulo, descripcion, prioridad });
     
     form.reset();
     aplicarFiltros(); 
+    mostrarToastExito();
 });
 
-// Detalle del elemento Modal
-const asignarEventosDetalle = () => {
-    const botones = document.querySelectorAll('.btn-detalle');
-    botones.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const idBuscado = Number(e.target.dataset.id);
-            
-            // METODO find
-            const incidencia = incidencias.find(inc => inc.id === idBuscado);
-            
-            if(incidencia) abrirModal(incidencia);
-        });
-    });
-};
-
-const abrirModal = (incidencia) => {
-    document.getElementById('modal-titulo').textContent = incidencia.titulo;
-    document.getElementById('modal-estado').textContent = incidencia.estado;
-    document.getElementById('modal-prioridad').textContent = incidencia.prioridad;
-    document.getElementById('modal-fecha').textContent = incidencia.fecha;
-    document.getElementById('modal-descripcion').textContent = incidencia.descripcion;
-    modal.classList.remove('hidden');
-};
-
-btnCerrarModal.addEventListener('click', () => modal.classList.add('hidden'));
-
-// Cerrar modal haciendo click afuera de el
-window.addEventListener('click', (e) => {
-    if (e.target === modal) modal.classList.add('hidden');
+// Eventos Delegados (Mejora de rendimiento para el modal)
+listaDOM.addEventListener('click', (e) => {
+    if (e.target.dataset.action === 'detalle') {
+        const id = Number(e.target.dataset.id);
+        const incidencia = incidenciasActuales.find(inc => inc.id === id);
+        
+        if (incidencia) {
+            document.getElementById('modal-titulo').textContent = incidencia.titulo;
+            document.getElementById('modal-estado').textContent = incidencia.estado;
+            document.getElementById('modal-prioridad').textContent = incidencia.prioridad;
+            document.getElementById('modal-fecha').textContent = incidencia.fecha;
+            document.getElementById('modal-descripcion').textContent = incidencia.descripcion;
+            modal.classList.remove('hidden');
+        }
+    }
 });
 
-// Listeners de filtros
-inputBuscar.addEventListener("input", aplicarFiltros);
-selectFiltro.addEventListener("change", aplicarFiltros);
-
-// Inicializacion de vista
-renderizarIncidencias(incidencias);
+// Cerrar Modal
+document.getElementById('close-modal').addEventListener('click', () => modal.classList.add('hidden'));
+window.addEventListener('click', (e) => { if (e.target === modal) modal.classList.add('hidden'); });
