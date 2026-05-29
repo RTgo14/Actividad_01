@@ -19,7 +19,8 @@ Este sistema permite a un equipo de soporte técnico registrar, buscar y filtrar
 ## Características Principales
 * **Arquitectura Modular:** Separación estricta de la lógica de negocio, manejo del DOM, servicios de almacenamiento y validaciones (Principio de Responsabilidad Única).
 * **Reglas de Negocio (POO):** Uso de clases para garantizar que todo ticket nuevo nazca con el estado por defecto "Abierto" y con campos obligatorios.
-* **Mejoras de UX:** * Contador dinámico de registros.
+* **Mejoras de UX:**
+  * Contador dinámico de registros.
   * Estado vacío (*Empty State*) amigable cuando no hay coincidencias o datos.
   * Ordenamiento automático (los tickets más recientes aparecen primero).
   * Notificaciones visuales (Toast) al guardar con éxito.
