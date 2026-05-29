@@ -14,14 +14,17 @@ Prototipo web interactivo para la gestión y seguimiento de incidencias tecnoló
 - [Autores](#autores)
 
 ## Descripción del Proyecto
-Este sistema permite registrar, buscar, filtrar y gestionar tickets de soporte técnico. El enfoque principal está en la aplicación de métodos de arreglos (como map, filter, y find), validación de formularios y almacenamiento persistente en el navegador del usuario para asegurar una experiencia fluida.
+Este sistema permite a un equipo de soporte técnico registrar, buscar y filtrar tickets. Pasamos de un código monolítico a un sistema basado en módulos ES6. Aplicamos validaciones reutilizables, persistencia de datos con `localStorage` y programación orientada a objetos (clases) para asegurar que cada ticket cumpla con las reglas de negocio desde su creación.
 
 ## Características Principales
-* *Renderizado Dinámico:* Generación de la interfaz mediante JavaScript basado en un listado de objetos.
-* *Filtros en Tiempo Real:* Búsqueda combinada por texto y categorización por nivel de prioridad (Alta, Media, Baja).
-* *Persistencia Local:* Uso de la API de localStorage para que la información no se pierda al recargar la página.
-* *Validación de Datos:* Restricciones visuales en el formulario para asegurar la integridad de los registros antes de guardarlos.
-* *Vista de Detalles (Modal):* Panel expandible para visualizar la información completa de cada ticket seleccionado.
+* **Arquitectura Modular:** Separación estricta de la lógica de negocio, manejo del DOM, servicios de almacenamiento y validaciones (Principio de Responsabilidad Única).
+* **Reglas de Negocio (POO):** Uso de clases para garantizar que todo ticket nuevo nazca con el estado por defecto "Abierto" y con campos obligatorios.
+* **Mejoras de UX:** * Contador dinámico de registros.
+  * Estado vacío (*Empty State*) amigable cuando no hay coincidencias o datos.
+  * Ordenamiento automático (los tickets más recientes aparecen primero).
+  * Notificaciones visuales (Toast) al guardar con éxito.
+* **Filtros en Tiempo Real:** Búsqueda combinada por texto y categorización por nivel de prioridad.
+* **Vista de Detalles (Modal):** Panel expandible, optimizado con delegación de eventos, para leer la descripción completa.
 
 ## Capturas del Sistema
 
@@ -39,14 +42,21 @@ Ventana modal que expone la información completa al hacer clic en el botón "Ve
 
 ## Estructura del Proyecto
 
-text
+```text
 /app
-├── index.html       # Estructura principal de la interfaz
-├── styles.css       # Estilos, variables CSS y diseño responsive
-├── app.js           # Lógica de negocio, eventos y manipulación del DOM
-├── data.js          # Datos semilla (Seed data) iniciales
-├── README.md        # Documentación del proyecto
-└── capturas/        # Evidencias visuales del funcionamiento
+├── index.html                  # Estructura principal de la interfaz
+├── styles.css                  # Estilos, variables CSS y diseño responsive
+├── docs/                       # Documentación técnica del módulo
+├── js/                         # Lógica modularizada (ES6 Modules)
+│   ├── main.js                 # Orquestador principal y eventos
+│   ├── data/seed.js            # Datos de prueba iniciales
+│   ├── models/entity.js        # Clase constructora de la Incidencia
+│   ├── services/storage.js     # Manejo exclusivo de localStorage
+│   ├── services/module-service.js # CRUD y reglas de negocio
+│   ├── ui/render.js            # Manipulación pura del DOM y UI
+│   └── utils/validators.js     # Funciones puras de validación
+└── Capturas/                   # Evidencias visuales del funcionamiento
+```
 
 
 ## Instalación y Uso
@@ -54,6 +64,7 @@ text
 1. *Clonar el repositorio:*
    ```bash
    git clone https://github.com/RTgo14/Actividad_01.git
+   ```
    
 2. *Abrir el proyecto:*
 Dado que el código utiliza módulos de JavaScript (type="module" para separar la lógica de los datos), el sistema no funcionará haciendo doble clic sobre el archivo HTML debido a las políticas de seguridad (CORS) de los navegadores.
@@ -61,10 +72,6 @@ Dado que el código utiliza módulos de JavaScript (type="module" para separar l
 3. *Ejecución mediante Servidor Local:*
 
 * *VS Code:* Instala la extensión Live Server y presiona "Go Live" sobre el archivo index.html.
-
-* *Node.js:* Ejecuta npx serve en la terminal dentro de la raíz del directorio.
-
-* *Python:* Ejecuta python -m http.server en la terminal.
 
 ## Autores
 * Leiber Zambrano
